@@ -18,10 +18,7 @@ require(['scripts/render', 'json!data/data.json', 'jquery'], function (render, d
       };
 
       function entry(quadrant, position, direction) {
-        var angle = 0.5;
-        if (position === direction) {
-          angle = Math.random();
-        }
+         var angle = Math.random();
         return {
           quadrant: quadrant,
           // position is within the total of horizons.
@@ -31,7 +28,7 @@ require(['scripts/render', 'json!data/data.json', 'jquery'], function (render, d
           // the learning end point with the total of horizons.
           direction: direction,
           // angles are fractions of pi/2 (ie of a quadrant)
-          direction_angle: Math.random()
+          direction_angle: angle
         };
       }
 
