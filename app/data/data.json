@@ -1,7 +1,7 @@
 {
   "language": [
     {
-      "title": "Java",
+      "name": "Java",
       "important": 5,
       "usage": 5,
       "current": 5,
@@ -11,7 +11,7 @@
   ],
   "tools": [
     {
-      "title": "Linux",
+      "name": "Linux",
       "important": 3,
       "usage": 4,
       "current": 2,
@@ -21,7 +21,7 @@
   ],
   "others": [
     {
-      "title": "Agile",
+      "name": "Agile",
       "important": 3,
       "usage": 5,
       "current": 3,
@@ -31,7 +31,7 @@
   ],
   "frameworks": [
     {
-      "title": "Node.js",
+      "name": "Node.js",
       "important": 3,
       "usage": 5,
       "current": 3,
