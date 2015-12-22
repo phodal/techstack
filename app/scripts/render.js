@@ -64,6 +64,7 @@ define(['d3'], function (d3) {
           id: i,
           name: entry.name,
           quadrant: trend.quadrant,
+          important: entry.important,
           r: r,
           theta: theta,
           x: cart[0],
@@ -122,7 +123,7 @@ define(['d3'], function (d3) {
           return (d.quadrant + 1) * quad_angle + Math.PI / 2;
         });
 
-      var quads = []
+      var quads = [];
       for (var i = 0, ilen = data.quadrants.length; i < ilen; i++) {
         for (var j = 0, jlen = data.horizons.length; j < jlen; j++) {
           quads.push({
@@ -207,7 +208,9 @@ define(['d3'], function (d3) {
         });
 
       blips.append('circle')
-        .attr('r', '7px')
+        .attr('r', function(d){
+          return d.important * 2 + 'px';
+        })
       ;
 
       blips.append("text")

@@ -29,15 +29,15 @@ require(['scripts/render', 'json!data/data.json', 'jquery'], function (render, d
     for (var quadrant in data) {
       var convertFractions = function (trend) {
         return 1 - (trend - 1) / 5
-      }
+      };
       $.each(data[quadrant], function (index, skill) {
         results.push({
           name: skill.name,
+          important: skill.important,
           trend: entry(quadrant, convertFractions(skill.current), convertFractions(skill.future))
         });
       })
     }
-    console.log(results);
     return results;
   }
 
