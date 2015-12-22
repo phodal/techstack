@@ -1,0 +1,42 @@
+{
+  "language": [
+    {
+      "title": "Java",
+      "important": 5,
+      "usage": 5,
+      "current": 5,
+      "future": 5,
+      "description": "--------"
+    }
+  ],
+  "tools": [
+    {
+      "title": "Linux",
+      "important": 3,
+      "usage": 4,
+      "current": 2,
+      "future": 2,
+      "description": "--------"
+    }
+  ],
+  "others": [
+    {
+      "title": "Agile",
+      "important": 3,
+      "usage": 5,
+      "current": 3,
+      "future": 3,
+      "description": "--------"
+    }
+  ],
+  "frameworks": [
+    {
+      "title": "Node.js",
+      "important": 3,
+      "usage": 5,
+      "current": 3,
+      "future": 5,
+      "description": "--------"
+    }
+  ]
+}

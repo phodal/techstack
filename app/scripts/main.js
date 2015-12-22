@@ -9,6 +9,12 @@ require.config({
   'shim': {}
 });
 
-require([], function () {
-
+require(['scripts/render', 'json!data/data.json'], function (render, data) {
+  render.renderPage('#radar', {
+    horizons: ['discover', 'assess', 'learn', 'use'],
+    quadrants: ['languages', 'frameworks', 'tools', 'others'],
+    height: 768,
+    width: 768,
+    data: data
+  });
 });

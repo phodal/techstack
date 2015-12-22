@@ -4,26 +4,45 @@ body {
   color: #333;
 }
 
-.hero-unit {
-  margin: 50px auto 0 auto;
-  width: 300px;
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  background-color: #eee;
-  border-radius: 6px;
-  padding: 60px;
+svg, ul {
+  float: left;
 }
 
-.hero-unit h1 {
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
+svg text.name {
+  font-size: 12px;
+  opacity: 0.1
 }
 
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+svg line.quadrant {
+  stroke-width: 2px;
+}
+
+svg circle.horizon {
+  stroke: #999;
+  stroke-width: 2px;
+  stroke-opacity: 0;
+  fill: none;
+}
+
+svg line.direction {
+  stroke: black;
+  stroke-width: 5px;
+  marker-end: url(#arrow);
+  opacity: 0.2;
+}
+
+svg #arrow {
+  fill: black;
+}
+
+svg path.quadrant {
+  fill-opacity: 0.5;
+}
+
+svg text.quadrant {
+  font-weight: bold;
+  color: white;
+  opacity: 0.3;
+  font-size: 40px;
+  text-align: right;
 }
