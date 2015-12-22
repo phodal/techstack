@@ -12,8 +12,8 @@
   "tools": [
     {
       "name": "Linux",
-      "important": 3,
-      "usage": 4,
+      "important": 1,
+      "usage": 1,
       "current": 2,
       "future": 2,
       "description": "--------"

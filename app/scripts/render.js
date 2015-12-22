@@ -65,6 +65,7 @@ define(['d3'], function (d3) {
           name: entry.name,
           quadrant: trend.quadrant,
           important: entry.important,
+          usage: entry.usage,
           r: r,
           theta: theta,
           x: cart[0],
@@ -208,8 +209,13 @@ define(['d3'], function (d3) {
         });
 
       blips.append('circle')
-        .attr('r', function(d){
-          return d.important * 2 + 'px';
+        .style("fill", function (d) {
+          var colorTypes = ['white', '#2ECC71', '#2980B9', '#3498DB', '#2C3E50'];
+          return colorTypes[d.important - 1];
+        })
+        .attr('r', function (d) {
+          var usageMap = [5, 7, 9, 11, 13];
+          return usageMap[d.usage - 1]  + 'px';
         })
       ;
 
@@ -220,18 +226,6 @@ define(['d3'], function (d3) {
         .text(function (d) {
           return d.name;
         });
-
-      // add the lists
-      var ul = d3.select(id).append('ul');
-      ul.selectAll('li.quadrant')
-        .data(blip_data)
-        .enter()
-        .append('li')
-        .attr('class', 'quadrant')
-        .text(function (d) {
-          return d.name;
-        });
-
     }
 
     draw_radar();

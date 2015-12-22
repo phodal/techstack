@@ -34,6 +34,7 @@ require(['scripts/render', 'json!data/data.json', 'jquery'], function (render, d
         results.push({
           name: skill.name,
           important: skill.important,
+          usage: skill.usage,
           trend: entry(quadrant, convertFractions(skill.current), convertFractions(skill.future))
         });
       })
