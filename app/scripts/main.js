@@ -10,26 +10,31 @@ require.config({
 });
 
 require(['scripts/render', 'json!data/data.json', 'jquery'], function (render, data, $) {
-  function entry(quadrant, position, direction) {
-    return {
-      quadrant: quadrant,
-      // position is within the total of horizons.
-      position: position,
-      // angles are fractions of pi/2 (ie of a quadrant)
-      position_angle: 0.5,
-      // the learning end point with the total of horizons.
-      direction: direction,
-      // angles are fractions of pi/2 (ie of a quadrant)
-      direction_angle: 0.5
-    };
-  }
-
   function parse(data) {
     var results = [];
     for (var quadrant in data) {
       var convertFractions = function (trend) {
         return 1 - (trend - 1) / 5
       };
+
+      function entry(quadrant, position, direction) {
+        var angle = 0.5;
+        if (position === direction) {
+          angle = Math.random();
+        }
+        return {
+          quadrant: quadrant,
+          // position is within the total of horizons.
+          position: position,
+          // angles are fractions of pi/2 (ie of a quadrant)
+          position_angle: angle,
+          // the learning end point with the total of horizons.
+          direction: direction,
+          // angles are fractions of pi/2 (ie of a quadrant)
+          direction_angle: Math.random()
+        };
+      }
+
       $.each(data[quadrant], function (index, skill) {
         results.push({
           name: skill.name,

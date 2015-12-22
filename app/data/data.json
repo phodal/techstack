@@ -4,8 +4,40 @@
       "name": "Java",
       "important": 5,
       "usage": 5,
-      "current": 5,
+      "current": 4,
+      "future": 3,
+      "description": "--------"
+    },
+    {
+      "name": "JavaScript",
+      "important": 5,
+      "usage": 5,
+      "current": 4,
       "future": 5,
+      "description": "--------"
+    },
+    {
+      "name": "Scala",
+      "important": 5,
+      "usage": 5,
+      "current": 1,
+      "future": 3,
+      "description": "--------"
+    },
+    {
+      "name": "Ruby",
+      "important": 2,
+      "usage": 2,
+      "current": 3,
+      "future": 3,
+      "description": "--------"
+    },
+    {
+      "name": "ES6",
+      "important": 2,
+      "usage": 2,
+      "current": 1,
+      "future": 4,
       "description": "--------"
     }
   ],
