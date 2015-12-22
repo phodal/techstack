@@ -33,6 +33,14 @@
       "description": "--------"
     },
     {
+      "name": "Arduino",
+      "important": 3,
+      "usage": 3,
+      "current": 2,
+      "future": 3,
+      "description": "--------"
+    },
+    {
       "name": "ES6",
       "important": 2,
       "usage": 2,
@@ -44,7 +52,15 @@
   "tools": [
     {
       "name": "Linux",
-      "important": 1,
+      "important": 3,
+      "usage": 3,
+      "current": 3,
+      "future": 2,
+      "description": "--------"
+    },
+    {
+      "name": "Docker",
+      "important": 3,
       "usage": 1,
       "current": 2,
       "future": 2,
@@ -64,6 +80,22 @@
   "frameworks": [
     {
       "name": "Node.js",
+      "important": 3,
+      "usage": 5,
+      "current": 3,
+      "future": 5,
+      "description": "--------"
+    },
+    {
+      "name": "Django",
+      "important": 4,
+      "usage": 4,
+      "current": 4,
+      "future": 3,
+      "description": "--------"
+    },
+    {
+      "name": "React",
       "important": 3,
       "usage": 5,
       "current": 3,
