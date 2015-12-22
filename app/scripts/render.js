@@ -1,10 +1,27 @@
 define(['d3'], function (d3) {
   'use strict';
-  function renderPage(id, data) {
-    function identity(i) {
-      return i;
-    }
+  // Copyright (c) 2014 @simonellistonball
+  //https://github.com/simonellistonball/techradar
+  //Apache License
+  //Version 2.0, January 2004
+  //http://www.apache.org/licenses/
+  //
+  //  TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+  
+  function polar_to_cartesian(r, t) {
+    var x = r * Math.cos(t);
+    var y = r * Math.sin(t);
+    return [x, y];
+  }
 
+  function identity(i) {
+    return i;
+  }
+
+  /**
+   * Uses d3 to plot the radar
+   */
+  function renderPage(id, data) {
     var width = data.width || 800, height = data.height || 600;
     var cx = width / 2, cy = height / 2;
     var horizonWidth = 0.95 * (width > height ? height : width) / 2;
@@ -14,6 +31,59 @@ define(['d3'], function (d3) {
     var svg = d3.select(id).append('svg')
       .attr("width", width)
       .attr("height", height);
+    svg.append('marker')
+      .attr('id', 'arrow')
+      .attr('orient', "auto")
+      .attr('markerWidth', '2')
+      .attr('markerHeight', '4')
+      .attr('refX', 0.1)
+      .attr('refY', 2)
+      .append('path').attr('d', 'M0,0 V4 L2,2 Z');
+
+    function process_radar_data(data, currentTime) {
+      currentTime = currentTime || new Date();
+      // go through the data
+      var results = [];
+      for (var i in data.data) {
+        var entry = data.data[i];
+        var history = entry.history.filter(function (e) {
+          return (e.end == null || (e.end > currentTime && e.start < currentTime));
+        })[0];
+
+        var quadrant_delta = 0;
+
+        // figure out which quadrant this is
+        for (var j = 0, len = data.quadrants.length; j < len; j++) {
+          if (data.quadrants[j] == history.quadrant) {
+            quadrant_delta = quad_angle * j;
+          }
+        }
+
+        var theta = (history.position_angle * quad_angle) + quadrant_delta,
+          r = history.position * horizonWidth,
+          cart = polar_to_cartesian(r, theta);
+        var blip = {
+          id: i,
+          name: entry.name,
+          quadrant: history.quadrant,
+          r: r,
+          theta: theta,
+          x: cart[0],
+          y: cart[1]
+        };
+
+        if (history.direction) {
+          var r2 = history.direction * horizonWidth,
+            theta2 = (history.direction_angle * quad_angle) + quadrant_delta,
+            vector = polar_to_cartesian(r2, theta2);
+
+          blip.dx = vector[0] - cart[0];
+          blip.dy = vector[1] - cart[1];
+        }
+        results.push(blip);
+      }
+      return results;
+    }
 
     function add_quadrants(base) {
       var quadrants = base
@@ -35,6 +105,7 @@ define(['d3'], function (d3) {
         .attr('y2', function (d, i) {
           return (Math.sin(quad_angle * i) * horizonWidth);
         })
+        //.attr('class', quadrant_class)
         .attr('stroke', function (d, i) {
           return color_scale(i);
         });
@@ -53,7 +124,7 @@ define(['d3'], function (d3) {
           return (d.quadrant + 1) * quad_angle + Math.PI / 2;
         });
 
-      var quads = [];
+      var quads = []
       for (var i = 0, ilen = data.quadrants.length; i < ilen; i++) {
         for (var j = 0, jlen = data.horizons.length; j < jlen; j++) {
           quads.push({
@@ -97,7 +168,69 @@ define(['d3'], function (d3) {
     function draw_radar() {
       var base = svg.append('g')
         .attr('transform', "translate(" + cx + "," + cy + ")");
+
       add_quadrants(base);
+
+      var blip_data = process_radar_data(data);
+      blip_data.sort(
+        function (a, b) {
+          if (a.quadrant < b.quadrant)
+            return -1;
+          if (a.quadrant > b.quadrant)
+            return 1;
+          return 0;
+        });
+
+      var blips = base.selectAll('.blip')
+        .data(blip_data)
+        .enter().append('g')
+        .attr('class', 'blip')
+        .attr('id', function (d) {
+          return 'blip-' + d.id;
+        })
+        .attr('transform', function (d) {
+          return "translate(" + (d.x) + "," + (d.y) + ")";
+        })
+        .on('mouseover', function (d) {
+          d3.select(this).select("text.name").style({opacity: '1.0'});
+        })
+        .on('mouseout', function (d) {
+          d3.select(this).select("text.name").style({opacity: '0.1'});
+        });
+
+      blips.append('line')
+        .attr('class', 'direction')
+        .attr('x1', 0).attr('y1', 0)
+        .attr('x2', function (d) {
+          return d.dx;
+        })
+        .attr('y2', function (d) {
+          return d.dy;
+        });
+
+      blips.append('circle')
+        .attr('r', '7px')
+      ;
+
+      blips.append("text")
+        .attr("dy", "20px")
+        .style("text-anchor", "middle")
+        .attr('class', 'name')
+        .text(function (d) {
+          return d.name;
+        });
+
+      // add the lists
+      var ul = d3.select(id).append('ul');
+      ul.selectAll('li.quadrant')
+        .data(blip_data)
+        .enter()
+        .append('li')
+        .attr('class', 'quadrant')
+        .text(function (d) {
+          return d.name;
+        });
+
     }
 
     draw_radar();
