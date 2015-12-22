@@ -46,33 +46,33 @@ define(['d3'], function (d3) {
       var results = [];
       for (var i in data.data) {
         var entry = data.data[i];
-        var position = entry.history;
+        var trend = entry.trend;
 
         var quadrant_delta = 0;
 
         // figure out which quadrant this is
         for (var j = 0, len = data.quadrants.length; j < len; j++) {
-          if (data.quadrants[j] == position.quadrant) {
+          if (data.quadrants[j] == trend.quadrant) {
             quadrant_delta = quad_angle * j;
           }
         }
 
-        var theta = (position.position_angle * quad_angle) + quadrant_delta,
-          r = position.position * horizonWidth,
+        var theta = (trend.position_angle * quad_angle) + quadrant_delta,
+          r = trend.position * horizonWidth,
           cart = polar_to_cartesian(r, theta);
         var blip = {
           id: i,
           name: entry.name,
-          quadrant: position.quadrant,
+          quadrant: trend.quadrant,
           r: r,
           theta: theta,
           x: cart[0],
           y: cart[1]
         };
 
-        if (position.direction) {
-          var r2 = position.direction * horizonWidth,
-            theta2 = (position.direction_angle * quad_angle) + quadrant_delta,
+        if (trend.direction) {
+          var r2 = trend.direction * horizonWidth,
+            theta2 = (trend.direction_angle * quad_angle) + quadrant_delta,
             vector = polar_to_cartesian(r2, theta2);
 
           blip.dx = vector[0] - cart[0];

@@ -9,7 +9,7 @@ require.config({
   'shim': {}
 });
 
-require(['scripts/render', 'json!data/data.json'], function (render, data) {
+require(['scripts/render', 'json!data/data.json', 'jquery'], function (render, data, $) {
   function entry(quadrant, position, direction) {
     return {
       quadrant: quadrant,
@@ -24,20 +24,28 @@ require(['scripts/render', 'json!data/data.json'], function (render, data) {
     };
   }
 
+  function parse(data) {
+    var results = [];
+    for (var quadrant in data) {
+      var convertFractions = function (trend) {
+        return 1 - (trend - 1) / 5
+      }
+      $.each(data[quadrant], function (index, skill) {
+        results.push({
+          name: skill.name,
+          trend: entry(quadrant, convertFractions(skill.current), convertFractions(skill.future))
+        });
+      })
+    }
+    console.log(results);
+    return results;
+  }
+
   render.renderPage('#radar', {
     horizons: ['discover', 'assess', 'learn', 'use'],
     quadrants: ['languages', 'frameworks', 'tools', 'others'],
     height: 768,
     width: 768,
-    data: [
-      {
-        name: 'd3',
-        history: entry('frameworks', 0.8, 0.6)
-      },
-      {
-        name: 'java',
-        history: entry('others', 0.3, 0.6)
-      }
-    ]
+    data: parse(data)
   });
 });
