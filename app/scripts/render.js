@@ -21,7 +21,7 @@ define(['d3', 'lettuce', 'text!templates/description.html', 'jquery.tooltipster'
    * Uses d3 to plot the radar
    */
   function renderPage(id, data) {
-    var width = data.width || 800, height = data.height || 600;
+    var width = data.width || 768, height = data.height || 768;
     var cx = width / 2, cy = height / 2;
     var horizonWidth = 0.95 * (width > height ? height : width) / 2;
     var quad_angle = 2 * Math.PI / data.quadrants.length;
@@ -39,9 +39,7 @@ define(['d3', 'lettuce', 'text!templates/description.html', 'jquery.tooltipster'
       .attr('refY', 2)
       .append('path').attr('d', 'M0,0 V4 L2,2 Z');
 
-    function process_radar_data(data, currentTime) {
-      currentTime = currentTime || new Date();
-      // go through the data
+    function process_radar_data(data) {
       var results = [];
       for (var i in data.data) {
         var entry = data.data[i];
@@ -190,9 +188,6 @@ define(['d3', 'lettuce', 'text!templates/description.html', 'jquery.tooltipster'
         })
         .attr('transform', function (d) {
           return "translate(" + (d.x) + "," + (d.y) + ")";
-        })
-        .on('mouseover', function (d) {
-          d3.select(this).select("text.name").style({opacity: '1.0'});
         })
         .on('mouseout', function (d) {
           var lettuce = new Lettuce();
