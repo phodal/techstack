@@ -4,9 +4,15 @@ require.config({
     jquery: 'lib/jquery-2.1.3',
     json: 'lib/json',
     d3: 'lib/d3.min',
-    text: 'lib/text'
+    lettuce: 'lib/lettuce',
+    text: 'lib/text',
+    'jquery.tooltipster': 'lib/jquery.tooltipster.min'
   },
-  'shim': {}
+  'shim': {
+    'jquery.tooltipster': {
+      deps: ['jquery']
+    }
+  }
 });
 
 require(['scripts/render', 'json!data/data.json', 'jquery'], function (render, data, $) {
@@ -37,6 +43,7 @@ require(['scripts/render', 'json!data/data.json', 'jquery'], function (render, d
           name: skill.name,
           important: skill.important,
           usage: skill.usage,
+          description: skill.description,
           trend: entry(quadrant, convertFractions(skill.current), convertFractions(skill.future))
         });
       })

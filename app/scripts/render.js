@@ -1,4 +1,4 @@
-define(['d3'], function (d3) {
+define(['d3', 'lettuce', 'text!templates/description.html', 'jquery.tooltipster'], function (d3, Lettuce, description_template) {
   'use strict';
   // Copyright (c) 2014 @simonellistonball
   //https://github.com/simonellistonball/techradar
@@ -7,7 +7,6 @@ define(['d3'], function (d3) {
   //http://www.apache.org/licenses/
   //
   //  TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
-
   function polar_to_cartesian(r, t) {
     var x = r * Math.cos(t);
     var y = r * Math.sin(t);
@@ -66,6 +65,7 @@ define(['d3'], function (d3) {
           quadrant: trend.quadrant,
           important: entry.important,
           usage: entry.usage,
+          description: entry.description,
           r: r,
           theta: theta,
           x: cart[0],
@@ -195,7 +195,24 @@ define(['d3'], function (d3) {
           d3.select(this).select("text.name").style({opacity: '1.0'});
         })
         .on('mouseout', function (d) {
-          d3.select(this).select("text.name").style({opacity: '0.1'});
+          var lettuce = new Lettuce();
+          var data = {
+            id: id,
+            name: d.name,
+            description: d.description
+          };
+
+          var results = lettuce.Template.tmpl(description_template, data);
+
+          $(this).tooltipster({
+            content: $(results),
+            contentAsHTML: true,
+            position: 'top',
+            animation: 'grow',
+            interactive: true
+          });
+          $(this).find('rect').css('fill', '#ecf0f1');
+          d3.select(this).select("text.name").style({opacity: '1.0'});
         });
 
       blips.append('line')
