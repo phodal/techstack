@@ -5,6 +5,7 @@ body {
 }
 
 #radar {
+  width: 768px !important;
   margin: 0 auto;
 }
 

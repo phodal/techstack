@@ -65,6 +65,30 @@
       "current": 2,
       "future": 2,
       "description": "--------"
+    },
+    {
+      "name": "Shell",
+      "important": 2,
+      "usage": 5,
+      "current": 2,
+      "future": 2,
+      "description": "--------"
+    },
+    {
+      "name": "SSH",
+      "important": 3,
+      "usage": 2,
+      "current": 2,
+      "future": 2,
+      "description": "--------"
+    },
+    {
+      "name": "Gradle",
+      "important": 3,
+      "usage": 2,
+      "current": 2,
+      "future": 2,
+      "description": "--------"
     }
   ],
   "others": [
@@ -100,6 +124,14 @@
       "usage": 5,
       "current": 3,
       "future": 5,
+      "description": "--------"
+    },
+    {
+      "name": "Express",
+      "important": 2,
+      "usage": 3,
+      "current": 1,
+      "future": 3,
       "description": "--------"
     }
   ]
